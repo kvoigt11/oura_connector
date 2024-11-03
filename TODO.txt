@@ -1,1 +1,3 @@
 oura ring api website: https://cloud.ouraring.com/v2/docs
+
+1. Create Azure Blob Storage situation to hold semi-structured JSON from different endpoints.
