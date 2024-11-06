@@ -1,4 +1,6 @@
 import os
+import datetime
+
 from dotenv import load_dotenv
 from datetime import date
 
@@ -6,8 +8,10 @@ from datetime import date
 # Returns the current local date
 today = date.today()
 
+
+
 # Select all data
-start_date = '2020-01-01'
+start_date = today - datetime.timedelta(2000)
 end_date = today
 
 
@@ -33,3 +37,16 @@ COLLECTION_URL = "v2/usercollection"
 simple_params = {f'q': 'requests+language:python',
           'start_date': {start_date},
           'end_date': {end_date}}
+
+
+# List of different response endpoints
+response_endpoints_list = ['daily_activity',
+                           'daily_readiness',
+                           'daily_resilience',
+                           'daily_sleep',
+                           'daily_spo2',
+                           'daily_stress',
+                           'heartrate',
+                           'personal_info',
+                           'sleep',
+                           'daily_cardiovascular_age']
