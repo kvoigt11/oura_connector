@@ -1,11 +1,19 @@
+import datetime
 
 from oura_endpoints import pull_oura_endpoints
-from settings import response_endpoints_list
+from datetime import date
+
+# Returns the current local date
+today = date.today()
+
+# Select all data
+start_date = today - datetime.timedelta(1)
+end_date = today
 
 
-
+# Runs main
 def main():
-    pull_oura_endpoints(response_endpoints_list)
+    pull_oura_endpoints(start_date, end_date)
 
 
 if __name__ == "__main__":

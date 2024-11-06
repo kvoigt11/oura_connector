@@ -1,18 +1,6 @@
 import os
-import datetime
 
 from dotenv import load_dotenv
-from datetime import date
-
-
-# Returns the current local date
-today = date.today()
-
-
-
-# Select all data
-start_date = today - datetime.timedelta(2000)
-end_date = today
 
 
 # Load environment variables from .env file
@@ -34,9 +22,12 @@ OURA_URL = 'https://api.ouraring.com'
 COLLECTION_URL = "v2/usercollection"
 
 # Set parameters
-simple_params = {f'q': 'requests+language:python',
-          'start_date': {start_date},
-          'end_date': {end_date}}
+def set_simple_params(start_date, end_date):
+    simple_params = {f'q': 'requests+language:python',
+            'start_date': {start_date},
+            'end_date': {end_date}}
+    
+    return simple_params
 
 
 # List of different response endpoints
@@ -50,3 +41,11 @@ response_endpoints_list = ['daily_activity',
                            'personal_info',
                            'sleep',
                            'daily_cardiovascular_age']
+
+
+SNOWFLAKE_USER = os.getenv("SNOWFLAKE_USER")
+SNOWFLAKE_PASSWORD = os.getenv("SNOWFLAKE_PASSWORD")
+SNOWFLAKE_ACCOUNT = os.getenv("SNOWFLAKE_ACCOUNT")
+SNOWFLAKE_WAREHOUSE = os.getenv("SNOWFLAKE_WAREHOUSE")
+SNOWFLAKE_DATABASE = os.getenv("SNOWFLAKE_DATABASE")
+SNOWFLAKE_SCHEMA = os.getenv("SNOWFLAKE_SCHEMA")
