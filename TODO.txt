@@ -2,3 +2,4 @@ oura ring api website: https://cloud.ouraring.com/v2/docs
 
 1. Create Azure Blob Storage situation to hold semi-structured JSON from different endpoints. DONE.
 2. Need to use SQLAlchemy with Snowflake to make getting data into Snowflake easier.
+3. Change Azure Blob Storage to oura/raw/{endpoint}

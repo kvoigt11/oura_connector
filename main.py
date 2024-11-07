@@ -7,7 +7,7 @@ from datetime import date
 today = date.today()
 
 # Select all data
-start_date = today - datetime.timedelta(1)
+start_date = today - datetime.timedelta(1200)
 end_date = today
 
 
