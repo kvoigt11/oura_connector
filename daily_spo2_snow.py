@@ -6,12 +6,12 @@ from settings import connection_parameters
 
 
 
-def daily_activity_blob_to_snowflake():
+def daily_spo2_blob_to_snowflake():
     # Select the endpoint we want
-    endpoint = "daily_activity"
+    endpoint = "daily_spo2"
 
     # Specify the target table name
-    target_table = "OURA_DAILY_ACTIVITY"
+    target_table = "OURA_DAILY_SPO2"
 
     # Create a Snowpark session
     session = Session.builder.configs(connection_parameters).create()
@@ -26,17 +26,18 @@ def daily_activity_blob_to_snowflake():
     # Loop through each row and create dataframes
     big_list = []
     for i in range(len(df)):
-        indi_df = df['data'][i]
-        indi_df = pd.DataFrame(indi_df)
-        indi_df = indi_df.reset_index(drop = True)
+        try:
+            indi_df = df['data'][i]
+            indi_df = pd.DataFrame(indi_df)
+            indi_df = indi_df.reset_index(drop = True)
 
-        big_list.append(indi_df)
+            big_list.append(indi_df)
+        except:
+            pass
 
     # Concatenate all of these individual rows together into one dataframe
     next_df = pd.concat(big_list)
-
-    next_df = next_df.reset_index(drop = True)
-    final_df = next_df.drop(columns = ['met'], axis = 1)
+    final_df = next_df.reset_index(drop = True)
 
     # Convert Pandas DataFrame to Snowpark DataFrame
     snowpark_df = session.create_dataframe(final_df)
@@ -47,5 +48,4 @@ def daily_activity_blob_to_snowflake():
     print(f"Data from Azure Blob Storage folder {endpoint} has uploaded to Snowflake!")
 
     session.close()
-
 

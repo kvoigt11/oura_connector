@@ -49,3 +49,14 @@ SNOWFLAKE_ACCOUNT = os.getenv("SNOWFLAKE_ACCOUNT")
 SNOWFLAKE_WAREHOUSE = os.getenv("SNOWFLAKE_WAREHOUSE")
 SNOWFLAKE_DATABASE = os.getenv("SNOWFLAKE_DATABASE")
 SNOWFLAKE_SCHEMA = os.getenv("SNOWFLAKE_SCHEMA")
+
+# Snowflake connection parameters
+connection_parameters = {
+    "account": SNOWFLAKE_ACCOUNT,
+    "user": SNOWFLAKE_USER,
+    "password": SNOWFLAKE_PASSWORD,
+    "role": "ACCOUNTADMIN",
+    "warehouse": SNOWFLAKE_WAREHOUSE,
+    "database": SNOWFLAKE_DATABASE,
+    "schema": SNOWFLAKE_SCHEMA
+}
