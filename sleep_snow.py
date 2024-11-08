@@ -39,8 +39,6 @@ def sleep_blob_to_snowflake():
     next_df = pd.concat(big_list)
     final_df = next_df.reset_index(drop = True)
 
-    print(final_df)
-
     # Convert Pandas DataFrame to Snowpark DataFrame
     snowpark_df = session.create_dataframe(final_df)
 
@@ -51,6 +49,3 @@ def sleep_blob_to_snowflake():
 
     session.close()
 
-
-
-sleep_blob_to_snowflake()

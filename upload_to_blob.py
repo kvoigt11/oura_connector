@@ -13,7 +13,7 @@ def upload_to_blob_storage(response_needs, json_data, folder_path, start_date, e
     container_client = blob_service_client.get_container_client(AZ_CONTAINER_NAME)
 
     # Generate blob name (file path in container)
-    blob_name = f"{folder_path}/{response_needs}/kv_oura_{response_needs}_data_from_{start_date}_to_{end_date}.json"
+    blob_name = f"{folder_path}/{response_needs}/kv_oura_{response_needs}_data.json"
 
     # Get blob client
     blob_client = container_client.get_blob_client(blob_name)

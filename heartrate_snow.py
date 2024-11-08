@@ -48,7 +48,3 @@ def heartrate_blob_to_snowflake():
     print(f"Data from Azure Blob Storage folder {endpoint} has uploaded to Snowflake!")
 
     session.close()
-
-
-
-heartrate_blob_to_snowflake()

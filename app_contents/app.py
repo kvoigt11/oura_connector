@@ -2,6 +2,8 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import plotly.express as px
+import statsmodels.api as sm
 
 import sys
 import os
@@ -32,15 +34,14 @@ snow_df = session.table("OURA_SLEEP")
 # Convert Snowpark DataFrame to Pandas DataFrame
 df = snow_df.to_pandas()
 
+df['day'] = pd.to_datetime(df['day'], format = "%Y-%m-%d")
+
 # Create the scatter chart
 st.title("Scatter Chart Example")
 
-chart = alt.Chart(df).mark_circle().encode(
-    x='day:T',
-    y='average_hrv:Q'
-)
+fig = px.scatter(df, x="day", y="average_hrv", trendline='lowess', trendline_color_override="red")
 
-st.altair_chart(chart, use_container_width=True)
+st.plotly_chart(fig)
 
 session.close()
 
