@@ -16,14 +16,4 @@ def create_snow_conn():
                                 ))
     return snow_engine
 
-    # # Test connection
-    # try:
-    #     connection = engine.connect()
-    #     results = connection.execute(text("SELECT CURRENT_VERSION()"))
-    #     version = results.scalar() 
-    #     print(version)
-    # finally:
-    #     connection.close()
-    #     engine.dispose()
-
 
