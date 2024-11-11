@@ -5,4 +5,4 @@ oura ring api website: https://cloud.ouraring.com/v2/docs
 3. Change Azure Blob Storage to oura/raw/{endpoint}. DONE
 4. Use StreamLit to pull data from snowflake to then visualize your data.
 5. Use Snowflake Views to create rolling averages of different metrics over time.
-
+6. Accidentally deleted the azure container registry
