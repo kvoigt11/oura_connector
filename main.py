@@ -23,7 +23,7 @@ end_date = today
 
 # Runs main
 def main():
-    # pull_oura_endpoints(start_date, end_date)
+    pull_oura_endpoints(start_date, end_date)
     personal_info_blob_to_snowflake()
     daily_activity_blob_to_snowflake()
     daily_cardio_age_blob_to_snowflake()
