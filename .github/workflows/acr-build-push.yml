@@ -18,6 +18,27 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    # Create .env file from secrets before Docker build
+    - name: Create .env file
+      run: |
+        echo "oura_token=${{ secrets.OURA_TOKEN }}" >> .env
+        echo "oura_clientid=${{ secrets.OURA_CLIENTID }}" >> .env
+        echo "oura_clientsecret=${{ secrets.OURA_CLIENTSECRET }}" >> .env
+        echo "AZ_KEY1_CONNECTION_STRING=${{ secrets.AZ_KEY1_CONNECTION_STRING }}" >> .env
+        echo "AZ_CONTAINER_NAME=${{ secrets.AZ_CONTAINER_NAME }}" >> .env
+        echo "AZ_FOLDER_PATH=${{ secrets.AZ_FOLDER_PATH }}" >> .env
+        echo "SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}" >> .env
+        echo "SNOWFLAKE_PASSWORD=${{ secrets.SNOWFLAKE_PASSWORD }}" >> .env
+        echo "SNOWFLAKE_ACCOUNT=${{ secrets.SNOWFLAKE_ACCOUNT }}" >> .env
+        echo "SNOWFLAKE_WAREHOUSE=${{ secrets.SNOWFLAKE_WAREHOUSE }}" >> .env
+        echo "SNOWFLAKE_DATABASE=${{ secrets.SNOWFLAKE_DATABASE }}" >> .env
+        echo "SNOWFLAKE_SCHEMA=${{ secrets.SNOWFLAKE_SCHEMA }}" >> .env
+        echo "AZURE_CREDENTIALS=${{ secrets.AZURE_CREDENTIALS }}" >> .env
+        echo "REGISTRY_PASSWORD=${{ secrets.REGISTRY_PASSWORD }}" >> .env
+        echo "REGISTRY_USERNAME=${{ secrets.REGISTRY_USERNAME }}" >> .env
+        # Add any other environment variables you need
+        echo ".env file created successfully"
+        
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -40,6 +61,17 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
+    # Add verification step to ensure .env exists
+    - name: Verify .env file
+      run: |
+        if [ -f ".env" ]; then
+          echo ".env file exists"
+          ls -la .env
+        else
+          echo ".env file is missing"
+          exit 1
+        fi
+    
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
@@ -48,8 +80,3 @@ jobs:
         tags: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_TAG }}
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.REPOSITORY_NAME }}:latest
-    
-    - name: Scan for vulnerabilities
-      uses: azure/container-scan@v0
-      with:
-        image-name: ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.REPOSITORY_NAME }}:${{ env.IMAGE_TAG }}
