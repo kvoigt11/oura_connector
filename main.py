@@ -12,7 +12,6 @@ from personal_info_snow import personal_info_blob_to_snowflake
 from sleep_snow import sleep_blob_to_snowflake
 
 
-
 # Returns the current local date
 today = date.today()
 
