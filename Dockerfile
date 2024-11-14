@@ -26,3 +26,7 @@ RUN apt-get update && apt-get install -y gdal-bin libgdal-dev
 
 # Copy the rest of the application code into the container at /app
 COPY . /opt/prefect/flows
+
+
+
+CMD ["streamlit", "run", "app_contents/app.py", "--server.port=80", "--server.enableCORS=false"]
