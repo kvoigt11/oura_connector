@@ -43,5 +43,5 @@ fig = px.scatter(df, x="day", y="average_hrv", trendline='lowess', trendline_col
 
 st.plotly_chart(fig)
 
-session.close()
+# session.close()
 
