@@ -1,5 +1,9 @@
 import datetime
 
+from prefect import flow
+from prefect.logging import get_run_logger
+from prefect.docker import DockerImage
+
 from oura_endpoints import pull_oura_endpoints
 from datetime import date
 from daily_activity_snow import daily_activity_blob_to_snowflake
@@ -21,6 +25,7 @@ end_date = today
 
 
 # Runs main
+@flow(log_prints=True)
 def main():
     pull_oura_endpoints(start_date, end_date)
     personal_info_blob_to_snowflake()
@@ -35,4 +40,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main.deploy(
+        name="oura-runner",
+        image=DockerImage(
+            name="containerregistrykylevoigt.azurecr.io/kv-portfolio-app:latest",
+            platform="linux/amd64",
+            dockerfile="Dockerfile"
+        ),
+        work_pool_name="aci-work-pool",
+        push = False
+    )
