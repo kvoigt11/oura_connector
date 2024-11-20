@@ -28,14 +28,14 @@ end_date = today
 @flow(log_prints=True)
 def main():
     pull_oura_endpoints(start_date, end_date)
-    personal_info_blob_to_snowflake()
-    daily_activity_blob_to_snowflake()
-    daily_cardio_age_blob_to_snowflake()
-    daily_readiness_blob_to_snowflake()
-    daily_sleep_blob_to_snowflake()
-    daily_spo2_blob_to_snowflake()
-    daily_stress_blob_to_snowflake()
-    sleep_blob_to_snowflake()
+    # personal_info_blob_to_snowflake()
+    # daily_activity_blob_to_snowflake()
+    # daily_cardio_age_blob_to_snowflake()
+    # daily_readiness_blob_to_snowflake()
+    # daily_sleep_blob_to_snowflake()
+    # daily_spo2_blob_to_snowflake()
+    # daily_stress_blob_to_snowflake()
+    # sleep_blob_to_snowflake()
 
 
 
