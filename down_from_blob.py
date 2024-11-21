@@ -21,29 +21,33 @@ def get_oura_az_blob_data():
         # Extract the folder name from the blob path
         folder_name = blob_name.split('/')[2]
 
-        # Download the blob data
-        blob_client = container_client.get_blob_client(blob=blob_name)
-        blob_data = blob_client.download_blob().readall()
+        if folder_name in response_endpoints_list:
+            # Download the blob data
+            blob_client = container_client.get_blob_client(blob=blob_name)
+            blob_data = blob_client.download_blob().readall()
+            
+            # Load the data into a pandas DataFrame
+            if folder_name == 'personal_info':
+                # Decode the byte string to a JSON string
+                json_str = blob_data.decode('utf-8')
+
+                # Convert the JSON string to a dictionary
+                df = json.loads(json_str)
+
+                # # Convert the dictionary to a DataFrame
+                df = pd.DataFrame([df])
+
+            else:
+                df = pd.read_json(io.BytesIO(blob_data))
         
-        # Load the data into a pandas DataFrame
-        if folder_name == 'personal_info':
-            # Decode the byte string to a JSON string
-            json_str = blob_data.decode('utf-8')
-
-            # Convert the JSON string to a dictionary
-            df = json.loads(json_str)
-
-            # # Convert the dictionary to a DataFrame
-            df = pd.DataFrame([df])
-
+            # Create endpoint column for sorting
+            df['endpoint'] = folder_name
+            
+            # Append to list for comprehension
+            df_list.append(df)
+    
         else:
-            df = pd.read_json(io.BytesIO(blob_data))
-        
-        # Create endpoint column for sorting
-        df['endpoint'] = folder_name
-        
-        # Append to list for comprehension
-        df_list.append(df)
+            continue
 
     # Concatenate list in pandas dataframe
     big_df = pd.concat(df_list)
@@ -60,5 +64,3 @@ def get_oura_az_blob_data():
     big_df = big_df[['data', 'endpoint']]
 
     return pi_df, big_df
-
-

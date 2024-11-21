@@ -3,7 +3,6 @@ import pandas as pd
 import json
 
 from settings import headers, OURA_URL, COLLECTION_URL
-from settings import AZ_FOLDER_PATH
 from settings import response_endpoints_list
 from upload_to_blob import upload_to_blob_storage
 from settings import set_simple_params
@@ -23,7 +22,6 @@ def pull_oura_endpoints(start_date, end_date):
 
         upload_to_blob_storage(response_needs = response_needs,
                             json_data = json_response,
-                            folder_path = AZ_FOLDER_PATH,
                             start_date = start_date,
                             end_date = end_date)
     

@@ -1,20 +1,17 @@
 import pandas as pd
 
 from down_from_blob import get_oura_az_blob_data
-from snowflake.snowpark import Session
-from settings import connection_parameters
+from settings import AZURE_SERVER_NAME, AZURE_DATABASE_NAME, AZURE_DATABASE_USERNAME, AZURE_DATABASE_PASSWORD
+from upload_to_az_db import upload_to_azure_sql
 
 
 
-def daily_activity_blob_to_snowflake():
+def daily_activity_blob_to_azure():
     # Select the endpoint we want
     endpoint = "daily_activity"
 
     # Specify the target table name
     target_table = "OURA_DAILY_ACTIVITY"
-
-    # Create a Snowpark session
-    session = Session.builder.configs(connection_parameters).create()
 
     # Pull data azure blob storage data in pandas dataframes
     pi_df, big_df = get_oura_az_blob_data()
@@ -38,14 +35,13 @@ def daily_activity_blob_to_snowflake():
     next_df = next_df.reset_index(drop = True)
     final_df = next_df.drop(columns = ['met'], axis = 1)
 
-    # Convert Pandas DataFrame to Snowpark DataFrame
-    snowpark_df = session.create_dataframe(final_df)
+    upload_to_azure_sql(
+        df = final_df,
+        table_name = target_table,
+        server = AZURE_SERVER_NAME,
+        database = AZURE_DATABASE_NAME,
+        username = AZURE_DATABASE_USERNAME,
+        password = AZURE_DATABASE_PASSWORD)
 
-    # Write the DataFrame to the Snowflake table
-    snowpark_df.write.mode("overwrite").save_as_table(target_table)
-
-    print(f"Data from Azure Blob Storage folder {endpoint} has uploaded to Snowflake!")
-
-    session.close()
-
+    print(f"Data from Azure Blob Storage folder {endpoint} has uploaded to Azure SQL Database!")
 

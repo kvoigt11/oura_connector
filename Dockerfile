@@ -4,6 +4,19 @@ FROM prefecthq/prefect:3.1.2.dev1-python3.11
 # Set the working directory to /app
 WORKDIR /opt/prefect/flows
 
+# Install ODBC Driver
+RUN apt-get update && apt-get install -y \
+    gnupg2 \
+    curl \
+    unixodbc \
+    unixodbc-dev
+
+# Add Microsoft repository and install SQL Server ODBC driver
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
 # Copy the requirements file into the container
 COPY requirements.txt .
 

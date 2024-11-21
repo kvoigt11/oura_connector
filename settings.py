@@ -13,6 +13,11 @@ personalToken = os.getenv("oura_token")
 AZ_KEY1_CONNECTION_STRING = os.getenv("AZ_KEY1_CONNECTION_STRING")
 AZ_CONTAINER_NAME = os.getenv("AZ_CONTAINER_NAME")
 AZ_FOLDER_PATH = os.getenv("AZ_FOLDER_PATH")
+AZURE_SERVER_NAME = os.getenv("AZURE_SERVER_NAME")
+AZURE_DATABASE_NAME = os.getenv("AZURE_DATABASE_NAME")
+AZURE_DATABASE_USERNAME = os.getenv("AZURE_DATABASE_USERNAME")
+AZURE_DATABASE_PASSWORD = os.getenv("AZURE_DATABASE_PASSWORD")
+
 
 # Big stuff
 headers = {'Content-Type': 'application/json',
