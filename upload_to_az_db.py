@@ -6,12 +6,16 @@ import urllib.parse
 
 
 
+
+
+
+
 def upload_to_azure_sql(df, table_name, server, database, username, password):
     """
     Upload a pandas DataFrame to Azure SQL Database through a virtual network connection.
     """
-    
-    # Configure the connection string
+
+    # Configure the connection string - This One Works
     params = urllib.parse.quote_plus(
         'Driver={ODBC Driver 17 for SQL Server};'
         f'Server=tcp:{server},1433;'
@@ -20,9 +24,10 @@ def upload_to_azure_sql(df, table_name, server, database, username, password):
         f'Pwd={password};'
         'Encrypt=yes;'
         'TrustServerCertificate=no;'
-        'Connection Timeout=30;'
+        'Connection Timeout=60;'
+        'Command Timeout=60;'
     )
-    
+
     try:
         # Create SQLAlchemy engine
         engine = create_engine(f'mssql+pyodbc:///?odbc_connect={params}')

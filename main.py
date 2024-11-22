@@ -46,6 +46,6 @@ if __name__ == "__main__":
             platform="linux/amd64",
             dockerfile="Dockerfile"
         ),
-        work_pool_name="aci-work-pool",
+        work_pool_name="my-aci-workpool-2",
         push = False
     )

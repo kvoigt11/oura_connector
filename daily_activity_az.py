@@ -35,6 +35,7 @@ def daily_activity_blob_to_azure():
     next_df = next_df.reset_index(drop = True)
     final_df = next_df.drop(columns = ['met'], axis = 1)
 
+    # Works
     upload_to_azure_sql(
         df = final_df,
         table_name = target_table,
@@ -42,6 +43,9 @@ def daily_activity_blob_to_azure():
         database = AZURE_DATABASE_NAME,
         username = AZURE_DATABASE_USERNAME,
         password = AZURE_DATABASE_PASSWORD)
+    
 
     print(f"Data from Azure Blob Storage folder {endpoint} has uploaded to Azure SQL Database!")
 
+
+daily_activity_blob_to_azure()
